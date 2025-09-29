@@ -18,9 +18,12 @@ log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
 log_file=$log_folder/$script_name.log
 
-mkdir -p $log_folder
-start_time=$(date +%s)
-echo "script execution started at time: $(date)" | tee -a $log_file
+# Function to setup logging (run after check_root)
+setup_logging() {
+    mkdir -p "$log_folder"
+    start_time=$(date +%s)
+    echo "script execution started at time: $(date)" | tee -a "$log_file"
+}
 
 
 validate() {
