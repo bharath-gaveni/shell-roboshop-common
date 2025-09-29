@@ -12,6 +12,7 @@ check_root(){
 }
 
 mongodb_Host_name=mongodb.bharathgaveni.fun
+mysql_Host_name=mysql.bharathgaveni.fun
 Dir_name=$PWD
 log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
@@ -63,6 +64,26 @@ nodejs_setup() {
     
     npm install &>>$log_file
     validate $? "installing the dependencies for node"
+}
+
+java_setup() {
+    dnf install maven -y &>>$log_file
+    validate $? "installing maven which also install java"
+    
+    mvn clean package &>>$log_file
+    validate $? "install dependecies and package application in to .jar file"
+    
+    mv target/shipping-1.0.jar shipping.jar &>>$log_file
+    validate $? "moving the .jar file to current directory means /app"
+    
+}
+
+python_setup() {
+    dnf install python3 gcc python3-devel -y &>>$log_file
+    validate $? "installing python"
+    
+    pip3 install -r requirements.txt &>>$log_file
+    validate $? "installing dependencies"
 }
 
 systemd_setup() {
