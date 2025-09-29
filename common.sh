@@ -59,7 +59,7 @@ nodejs_setup() {
     validate $? "Enabled the nodejs 20"
     
     dnf install nodejs -y &>>$log_file
-    VALIDATE $? "Installing NodeJS"
+    validate $? "Installing NodeJS"
     
     npm install &>>$log_file
     validate $? "installing the dependencies for node"
