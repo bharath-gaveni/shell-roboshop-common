@@ -10,6 +10,8 @@ check_root(){
         exit 1
     fi
 }
+
+mongodb_Host_name=mongodb.bharathgaveni.fun
 Dir_name=$PWD
 log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
@@ -79,6 +81,11 @@ systemd_setup() {
     
     systemctl start $name &>>$log_file
     validate $? "started the $name"
+}
+
+restart_app() {
+    systemctl restart $name
+    validate $? "Restarted the $name"
 }
 
 print_time() {
