@@ -13,6 +13,14 @@ mkdir -p $log_folder
 start_time=$(date +%s)
 echo "script execution started at time: $(date)" | tee -a $log_file
 
+check_root() {
+    id=$(id -u)
+    if [ $id -ne 0 ]; then
+        echo -e "$R Please execute this script as root user $N"
+        exit 1
+    fi
+}
+
 validate() {
     if [ $1 -ne 0 ]; then
         echo -e "$2 is $R FAILED $N" 
@@ -28,13 +36,6 @@ print_time() {
     echo "total time taken to execute this script is $total_time seconds"
 }
 
-check_root() {
-    id=$(id -u)
-    if [ $id -ne 0 ]; then
-        echo -e "$R Please execute this script as root user $N"
-        exit 1
-    fi
-}
 
 
 
