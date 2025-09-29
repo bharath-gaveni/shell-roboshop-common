@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source ./common.sh
+source ./common.
+
+check_root
 
 cp $Dir_name/mongo.repo /etc/yum.repos.d/mongo.repo 
 validate $? "Copying the mongo.repo" 
