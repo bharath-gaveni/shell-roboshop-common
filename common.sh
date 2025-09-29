@@ -4,12 +4,7 @@ R="\e[0;31m"
 G="\e[0;32m"
 Y="\e[0;33m"
 id=$(id -u)
-check_root(){
-    if [ $id -ne 0 ]; then
-        echo -e "$R Please execute this script as root user $N"
-        exit 1
-    fi
-}
+
 Dir_name=$PWD
 log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
@@ -19,19 +14,26 @@ mkdir -p $log_folder
 start_time=$(date +%s)
 echo "script execution started at time: $(date)" | tee -a $log_file
 
+check_root(){
+    if [ $id -ne 0 ]; then
+        echo -e "$R Please execute this script as root user $N"
+        exit 1
+    fi
+}
+
 validate() {
     if [ $1 -ne 0 ]; then
-        echo -e "$2 is $R FAILED $N" 
+        echo -e "$2 is $R FAILED $N" | tee -a $log_file
         exit 1
     else
-        echo -e "$2 is $G SUCCESS $N"
+        echo -e "$2 is $G SUCCESS $N" | tee -a $log_file
     fi        
 }
 
 print_time() {
     end_time=$(date +%s)
     total_time=$(($end_time-$start_time))
-    echo "total time taken to execute this script is $total_time seconds"
+    echo "total time taken to execute this script is $total_time seconds" | tee -a $log_file
 }
 
 
