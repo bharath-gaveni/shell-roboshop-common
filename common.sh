@@ -3,13 +3,7 @@ N="\e[0m"
 R="\e[0;31m"
 G="\e[0;32m"
 Y="\e[0;33m"
-check_root() {
-    id=$(id -u)
-    if [ $id -ne 0 ]; then
-        echo -e "$R Please execute this script as root user $N"
-        exit 1
-    fi
-}
+
 Dir_name=$PWD
 log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
@@ -34,6 +28,13 @@ print_time() {
     echo "total time taken to execute this script is $total_time seconds"
 }
 
+check_root() {
+    id=$(id -u)
+    if [ $id -ne 0 ]; then
+        echo -e "$R Please execute this script as root user $N"
+        exit 1
+    fi
+}
 
 
 
