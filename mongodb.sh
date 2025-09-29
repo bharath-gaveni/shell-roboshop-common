@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source ./common.sh
-
 check_root
 
 cp $Dir_name/mongo.repo /etc/yum.repos.d/mongo.repo 

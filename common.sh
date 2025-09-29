@@ -3,8 +3,6 @@ N="\e[0m"
 R="\e[0;31m"
 G="\e[0;32m"
 Y="\e[0;33m"
-
-Dir_name=$PWD
 check_root() {
     id=$(id -u)
     if [ $id -ne 0 ]; then
@@ -12,7 +10,7 @@ check_root() {
         exit 1
     fi
 }
-
+Dir_name=$PWD
 log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
 log_file=$log_folder/$script_name.log
