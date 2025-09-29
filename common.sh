@@ -58,7 +58,7 @@ nodejs_setup() {
     dnf module enable nodejs:20 -y &>>$log_file
     validate $? "Enabled the nodejs 20"
     
-    dnf install nodejs -y &>>$LOG_FILE
+    dnf install nodejs -y &>>$log_file
     VALIDATE $? "Installing NodeJS"
     
     npm install &>>$log_file
