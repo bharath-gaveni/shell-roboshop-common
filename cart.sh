@@ -1,6 +1,6 @@
 #!/bin/bash
 source ./common.sh
-name=user
+name=cart
 
 check_root
 app_setup
@@ -10,8 +10,3 @@ systemd_setup
 restart_app
 
 print_time
-
-
-
-
-
