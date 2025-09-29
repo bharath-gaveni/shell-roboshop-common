@@ -3,8 +3,13 @@ N="\e[0m"
 R="\e[0;31m"
 G="\e[0;32m"
 Y="\e[0;33m"
-id=$(id -u)
-
+check_root(){
+    id=$(id -u)
+    if [ $id -ne 0 ]; then
+        echo -e "$R Please execute this script as root user $N"
+        exit 1
+    fi
+}
 Dir_name=$PWD
 log_folder=/var/log/roboshop-script
 script_name=$(echo $0 | cut -d "." -f1)
@@ -14,12 +19,6 @@ mkdir -p $log_folder
 start_time=$(date +%s)
 echo "script execution started at time: $(date)" | tee -a $log_file
 
-check_root(){
-    if [ $id -ne 0 ]; then
-        echo -e "$R Please execute this script as root user $N"
-        exit 1
-    fi
-}
 
 validate() {
     if [ $1 -ne 0 ]; then
@@ -27,7 +26,59 @@ validate() {
         exit 1
     else
         echo -e "$2 is $G SUCCESS $N" | tee -a $log_file
-    fi        
+    fi
+}
+
+app_setup() {
+    mkdir -p /app &>>$log_file
+    validate $? "created the app directory"
+    
+    curl -o /tmp/$name.zip https://roboshop-artifacts.s3.amazonaws.com/$name-v3.zip &>>$log_file
+    validate $? "dowloading the $name code"
+    
+    cd /app &>>$log_file
+    validate $? "changing to app directory"
+    
+    rm -rf /app/* &>>$log_file
+    validate $? "removing the existing code in app directory"
+    
+    unzip /tmp/$name.zip &>>$log_file
+    validate $? "unzip the $name code in app directory"
+    
+    cd /app &>>$log_file
+    validate $? "changing to app directory"
+}
+
+nodejs_setup() {
+    dnf module disable nodejs -y &>>$log_file
+    validate $? "Disabled the nodejs"
+    
+    dnf module enable nodejs:20 -y &>>$log_file
+    validate $? "Enabled the nodejs 20"
+    
+    npm install &>>$log_file
+    validate $? "installing the dependencies for node"
+}
+
+systemd_setup() {
+    id roboshop &>>$log_file
+    if [ $? -ne 0 ]; then
+        useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    else
+        echo -e "User already exists so $Y SKIPPING.. $N"
+    fi
+    
+    cp $Dir_name/$name.service /etc/systemd/system/$name.service &>>$log_file
+    validate $? "Setting the systemd service for $name"
+    
+    systemctl daemon-reload &>>$log_file
+    validate $? "Deamon reload of $name to recognise the newly created service"
+    
+    systemctl enable $name &>>$log_file
+    validate $? "enabled the $name"
+    
+    systemctl start $name &>>$log_file
+    validate $? "started the $name"
 }
 
 print_time() {
