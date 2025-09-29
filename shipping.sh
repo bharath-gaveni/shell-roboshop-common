@@ -3,6 +3,7 @@ source ./common.sh
 name=shipping
 
 check_root
+setup_logging
 app_setup
 java_setup
 systemd_setup

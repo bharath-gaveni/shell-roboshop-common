@@ -3,6 +3,7 @@
 source ./common.sh
 
 check_root
+setup_logging
 
 dnf module disable redis -y &>>$log_file
 validate $? "disabled redis"

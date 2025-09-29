@@ -2,6 +2,7 @@
 
 source ./common.sh
 check_root
+setup_logging
 
 dnf install mysql-server -y &>>$log_file
 validate $? "installing mysql-server"

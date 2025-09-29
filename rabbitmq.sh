@@ -2,6 +2,7 @@
 
 source ./common.sh
 check_root
+setup_logging
 
 cp $Dir_name/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$log_file
 validate $? "copying the repo"
