@@ -22,7 +22,7 @@ start_time=$(date +%s)
 echo "script execution started at time: $(date)" | tee -a $log_file
 
 validate() {
-    if [$1 -ne 0 ]; then
+    if [ $1 -ne 0 ]; then
         echo -e "$2 is $R FAILED $N" 
         exit 1
     else
