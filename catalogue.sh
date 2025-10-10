@@ -21,7 +21,4 @@ else
     echo -e "Database is already loaded with products so $Y Skipping $N" | tee -a $log_file
 fi   
 
-systemctl restart catalogue &>>$log_file
-validate $? "restart catalogue"
-
 print_time
