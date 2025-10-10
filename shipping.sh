@@ -19,8 +19,5 @@ else
     echo -e "Data is already loaded so $Y Skipping $N" | tee -a $log_file
 fi
 
-systemctl restart shipping &>>$log_file
-validate $? "Restarted shipping"
-
 print_time
 
