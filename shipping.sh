@@ -3,6 +3,7 @@ source ./common.sh
 name=shipping
 Host_name=mysql.bharathgaveni.fun
 check_root
+setup_logging
 app_setup
 java_setup
 systemd_setup
