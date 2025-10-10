@@ -14,3 +14,4 @@ validate $? "start mysqld"
 
 mysql_secure_installation --set-root-pass RoboShop@1 &>>$log_file
 validate $? "setupping root passowrd for mysql to connect"
+print_time
