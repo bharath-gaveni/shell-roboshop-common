@@ -27,7 +27,7 @@ else
   --query 'Reservations[0].Instances[0].PublicIpAddress' \
   --output text)
     Record_name=$DNS
-
+fi
     echo "$instance:$IP"
     aws route53 change-resource-record-sets \
     --hosted-zone-id $Host_zone \
