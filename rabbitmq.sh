@@ -3,7 +3,7 @@ source ./common.sh
 check_root
 setup_logging
 
-cp $Dir_name/rabbitmq.sh /etc/yum.repos.d/rabbitmq.repo &>>$log_file
+cp $Dir_name/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$log_file
 validate $? "copying the rabbitmq.repo"
 
 dnf install rabbitmq-server -y &>>$log_file
