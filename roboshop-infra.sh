@@ -23,7 +23,7 @@ if [ $instance != "frontend" ]; then
 
 else 
     IP=$(aws ec2 describe-instances \
-  --instance-ids $INSTANCE_ID \
+  --instance-ids $instance_id \
   --query 'Reservations[0].Instances[0].PublicIpAddress' \
   --output text)
     Record_name=$DNS
