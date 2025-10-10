@@ -6,7 +6,7 @@ check_root
 setup_logging
 app_setup
 nodejs_setup
-
+systemd_setup
 cp $Dir_name/mongo.repo  /etc/yum.repos.d/mongo.repo &>>$log_file
 validate $? "copying mongo.repo"
 
