@@ -13,7 +13,7 @@ validate $? "copying mongo.repo"
 dnf install mongodb-mongosh -y &>>$log_file
 validate $? "installing mongodb client to connect with mongodb and load the data"
 
-index=$(mongosh $Host_name --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
+index=$(mongosh $mongodb_Host_name --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
 if [ $index -le 0 ]; then
 mongosh --host $mongodb_Host_name </app/db/master-data.js &>>$log_file
     echo "Catalogue products are loaded to mongodb"
